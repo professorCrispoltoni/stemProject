@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Michele Crispoltoni — STEM & Informatica</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #080c10;
+      --surface: #0e1520;
+      --surface2: #141e2e;
+      --border: #1e2d42;
+      --accent: #00d4ff;
+      --accent2: #7b5cf0;
+      --accent3: #00ff9d;
+      --text: #e8edf5;
+      --muted: #5a6e85;
+      --card-hover: #111b2b;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── GRID BACKGROUND ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(8,12,16,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--text); }
+
+    nav ul {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    nav ul a {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    nav ul a:hover { color: var(--accent); }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 8rem 2rem 4rem;
+      z-index: 1;
+    }
+
+    .hero-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 0.3rem 0.8rem;
+      border-radius: 2px;
+      margin-bottom: 2rem;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2.5rem, 7vw, 5.5rem);
+      line-height: 1.0;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+
+    h1 .line2 {
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      font-size: 0.9rem;
+      color: var(--muted);
+      max-width: 540px;
+      line-height: 1.8;
+      margin-bottom: 3rem;
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      animation: fadeUp 0.6s 0.3s ease both;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      border-radius: 3px;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--bg);
+      font-weight: 500;
+    }
+    .btn-primary:hover {
+      background: #fff;
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-outline:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    /* ── ORBIT DECORATION ── */
+    .hero-visual {
+      position: absolute;
+      right: -80px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 500px;
+      height: 500px;
+      opacity: 0.15;
+      pointer-events: none;
+    }
+
+    /* ── SECTIONS ── */
+    section {
+      position: relative;
+      z-index: 1;
+      padding: 5rem 2rem;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      letter-spacing: -0.02em;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-desc {
+      color: var(--muted);
+      font-size: 0.85rem;
+      max-width: 500px;
+      line-height: 1.8;
+      margin-bottom: 3rem;
+    }
+
+    /* ── CARDS GRID ── */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 2rem;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .card:hover {
+      background: var(--card-hover);
+      border-color: var(--accent);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,212,255,0.1);
+    }
+
+    .card:hover::before { opacity: 1; }
+
+    .card-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.6rem;
+      border-radius: 2px;
+      width: fit-content;
+    }
+
+    .tag-ia { background: rgba(123,92,240,0.15); color: var(--accent2); border: 1px solid rgba(123,92,240,0.3); }
+    .tag-bio { background: rgba(0,255,157,0.1); color: var(--accent3); border: 1px solid rgba(0,255,157,0.25); }
+    .tag-math { background: rgba(0,212,255,0.1); color: var(--accent); border: 1px solid rgba(0,212,255,0.25); }
+    .tag-prog { background: rgba(255,165,0,0.1); color: #ffaa40; border: 1px solid rgba(255,165,0,0.25); }
+
+    .card-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1.15rem;
+      line-height: 1.3;
+    }
+
+    .card-desc {
+      color: var(--muted);
+      font-size: 0.8rem;
+      line-height: 1.7;
+      flex: 1;
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+
+    .card-arrow {
+      color: var(--accent);
+      font-size: 1rem;
+      transition: transform 0.2s;
+    }
+    .card:hover .card-arrow { transform: translateX(4px); }
+
+    /* ── ABOUT ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    @media (max-width: 768px) {
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .hero-visual { display: none; }
+      nav ul { display: none; }
+    }
+
+    .about-text p {
+      color: var(--muted);
+      font-size: 0.85rem;
+      line-height: 1.9;
+      margin-bottom: 1rem;
+    }
+
+    .about-text p strong { color: var(--text); }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .stat-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.5rem;
+    }
+
+    .stat-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--accent);
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 0.25rem;
+    }
+
+    /* ── TOPICS ── */
+    .topics {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .topics-row {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .topic-pill {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 0.5rem 1.2rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+      cursor: default;
+      transition: all 0.2s;
+    }
+    .topic-pill:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .topic-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 2rem;
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-copy {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .footer-copy a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+    .footer-links a {
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--accent); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── TERMINAL BLINK ── */
+    .blink {
+      animation: blink 1s step-end infinite;
+    }
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="index.html">MC<span>.</span>STEM</a>
+    <ul>
+      <li><a href="#attivita">Attività</a></li>
+      <li><a href="#temi">Temi</a></li>
+      <li><a href="#about">Chi sono</a></li>
+      <li><a href="https://github.com/michelecrispoltoni" target="_blank">GitHub ↗</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-tag">// divulgazione stem</div>
+      <h1>
+        Informatica &amp; IA<br>
+        <span class="line2">per capire il mondo</span>
+      </h1>
+      <p class="hero-sub">
+        Sono Michele Crispoltoni, prof di informatica.<br>
+        Qui condivido attività, spunti e idee per usare<br>
+        <strong style="color:var(--text)">il codice come strumento di comprensione</strong> — dalla biologia all'economia, dalla fisica alla società.<span class="blink">_</span>
+      </p>
+      <div class="hero-cta">
+        <a href="#attivita" class="btn btn-primary">↓ Esplora le attività</a>
+        <a href="https://github.com/michelecrispoltoni" target="_blank" class="btn btn-outline">GitHub →</a>
+      </div>
+    </div>
+
+    <!-- SVG orbit decoration -->
+    <svg class="hero-visual" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="200" cy="200" r="160" stroke="#00d4ff" stroke-width="0.5" stroke-dasharray="4 8"/>
+      <circle cx="200" cy="200" r="100" stroke="#7b5cf0" stroke-width="0.5" stroke-dasharray="2 6"/>
+      <circle cx="200" cy="200" r="50"  stroke="#00ff9d" stroke-width="0.5"/>
+      <circle cx="200" cy="40"  r="8" fill="#00d4ff"/>
+      <circle cx="360" cy="200" r="5" fill="#7b5cf0"/>
+      <circle cx="200" cy="300" r="3" fill="#00ff9d"/>
+      <circle cx="100" cy="120" r="4" fill="#00d4ff" opacity="0.5"/>
+    </svg>
+  </section>
+
+  <!-- TOPICS BAR -->
+  <section class="topics" id="temi">
+    <div class="container">
+      <p class="section-label">Aree tematiche</p>
+      <div class="topics-row">
+        <div class="topic-pill"><span class="topic-dot" style="background:var(--accent2)"></span> Machine Learning</div>
+        <div class="topic-pill"><span class="topic-dot" style="background:var(--accent3)"></span> Modelli di Crescita</div>
+        <div class="topic-pill"><span class="topic-dot" style="background:var(--accent)"></span> Simulazioni</div>
+        <div class="topic-pill"><span class="topic-dot" style="background:#ffaa40"></span> Python & Coding</div>
+        <div class="topic-pill"><span class="topic-dot" style="background:var(--accent2)"></span> Reti Neurali</div>
+        <div class="topic-pill"><span class="topic-dot" style="background:var(--accent3)"></span> Biologia Computazionale</div>
+        <div class="topic-pill"><span class="topic-dot" style="background:var(--accent)"></span> Data Science</div>
+        <div class="topic-pill"><span class="topic-dot" style="background:#ffaa40"></span> Algoritmi</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACTIVITIES GRID -->
+  <section id="attivita">
+    <div class="container">
+      <p class="section-label fade-in">// attività</p>
+      <h2 class="section-title fade-in">Lezioni &amp; Notebook</h2>
+      <p class="section-desc fade-in">Ogni attività è un notebook interattivo con codice, grafici e spiegazioni — da leggere, eseguire e modificare.</p>
+
+      <div class="cards-grid">
+
+        <!-- KNN -->
+        <a href="notebooks/introduzione_a_knn.html" class="card fade-in">
+          <div class="card-tag tag-ia">🤖 Machine Learning</div>
+          <div class="card-title">Introduzione a KNN</div>
+          <div class="card-desc">
+            Come fa una macchina a "riconoscere" qualcosa? Scopriamo il K-Nearest Neighbours: l'algoritmo che classifica basandosi sui vicini più prossimi. Con codice Python passo-passo.
+          </div>
+          <div class="card-footer">
+            <span>Python · scikit-learn · numpy</span>
+            <span class="card-arrow">→</span>
+          </div>
+        </a>
+
+        <!-- Crescita Popolazioni -->
+        <a href="notebooks/crescita_popolazioni.html" class="card fade-in">
+          <div class="card-tag tag-bio">🌿 Biologia &amp; Matematica</div>
+          <div class="card-title">Crescita delle Popolazioni</div>
+          <div class="card-desc">
+            Dalla crescita esponenziale al modello logistico, fino alle equazioni di Lotka-Volterra. Come il codice ci aiuta a capire le dinamiche della vita.
+          </div>
+          <div class="card-footer">
+            <span>Python · matplotlib · scipy</span>
+            <span class="card-arrow">→</span>
+          </div>
+        </a>
+
+        <!-- Placeholder 3 -->
+        <div class="card fade-in" style="opacity:0.4; cursor:default; pointer-events:none;">
+          <div class="card-tag tag-math">📐 Simulazione</div>
+          <div class="card-title">Simulare il Caos</div>
+          <div class="card-desc">
+            Il pendolo doppio, le mappe logistiche, gli attrattori di Lorenz. Piccole differenze, grandi conseguenze.
+          </div>
+          <div class="card-footer">
+            <span>In arrivo...</span>
+            <span class="card-arrow" style="color:var(--muted)">○</span>
+          </div>
+        </div>
+
+        <!-- Placeholder 4 -->
+        <div class="card fade-in" style="opacity:0.4; cursor:default; pointer-events:none;">
+          <div class="card-tag tag-prog">💻 Reti Neurali</div>
+          <div class="card-title">Una Rete Neurale da Zero</div>
+          <div class="card-desc">
+            Costruire un perceptron con NumPy, senza framework. Per capire davvero cosa succede dentro a ChatGPT.
+          </div>
+          <div class="card-footer">
+            <span>In arrivo...</span>
+            <span class="card-arrow" style="color:var(--muted)">○</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" style="background:var(--surface); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-text">
+          <p class="section-label">// chi sono</p>
+          <h2 class="section-title fade-in">Michele Crispoltoni</h2>
+          <p class="fade-in">
+            <strong>Professore di Informatica</strong>, appassionato di divulgazione scientifica e tecnologica. Credo che il codice sia uno dei linguaggi più potenti per capire — e raccontare — il mondo.
+          </p>
+          <p class="fade-in">
+            In questo spazio condivido materiale didattico, esperimenti e idee nate in classe o fuori. Il filo conduttore: usare <strong>informatica e intelligenza artificiale</strong> come lenti per osservare fenomeni reali.
+          </p>
+          <p class="fade-in">
+            Tutto è open source e liberamente riutilizzabile.
+          </p>
+        </div>
+        <div class="about-stats fade-in">
+          <div class="stat-box">
+            <span class="stat-num">2</span>
+            <div class="stat-label">Notebook pubblicati</div>
+          </div>
+          <div class="stat-box">
+            <span class="stat-num">∞</span>
+            <div class="stat-label">Idee in cantiere</div>
+          </div>
+          <div class="stat-box">
+            <span class="stat-num">100%</span>
+            <div class="stat-label">Open source</div>
+          </div>
+          <div class="stat-box">
+            <span class="stat-num">🐍</span>
+            <div class="stat-label">Python first</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <p class="footer-copy">© 2025 <a href="#">Michele Crispoltoni</a> — Contenuti sotto licenza <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a></p>
+      <div class="footer-links">
+        <a href="https://github.com/michelecrispoltoni" target="_blank">GitHub</a>
+        <a href="mailto:">Contatti</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll-triggered fade-in
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 80);
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
