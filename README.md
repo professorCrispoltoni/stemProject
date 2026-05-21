@@ -9,8 +9,7 @@ Sito di divulgazione del Prof. Michele Crispoltoni, insegnante di Informatica. Q
 
 ## 🌐 Sito live
 
-**[michelecrispoltoni.github.io/stem](https://michelecrispoltoni.github.io/stem)**  
-_(sostituire con il proprio URL GitHub Pages)_
+**[michelecrispoltoni.github.io/stem](https://professorcrispoltoni.github.io/stemProject/)**  
 
 ---
 
